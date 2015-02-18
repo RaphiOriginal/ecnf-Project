@@ -93,6 +93,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RoutePlannerLib\RoutePlannerLib.csproj">
+      <Project>{0d9d6861-bec5-4b7b-8503-bfd138a4c814}</Project>
+      <Name>RoutePlannerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
