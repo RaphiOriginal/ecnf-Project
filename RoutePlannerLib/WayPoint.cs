@@ -18,5 +18,25 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             Latitude = _latitude;
             Longitude = _longitude;
         }
+
+      
+        public override string ToString() {
+             string text;
+             if (this.Name != null || this.Name != "")
+             {
+                text = string.Format("WayPoint: {0} {1f2}/{2f2}", Name, Latitude, Longitude);
+             }
+             else
+             {
+                text = string.Format("WayPoint: {0f2}/{1f2}", Latitude, Longitude);
+             }
+             return text;
+        }
+
+        public double Distance(WayPoint target)
+        {
+            const int r = 6371;
+            return r * Math.Acos(Math.Sin(Latitude) * Math.Sin(target.Latitude) + Math.Cos(Latitude) * Math.Cos(target.Latitude) * Math.Cos(Latitude - target.Latitude));
+        }
     }
 }
