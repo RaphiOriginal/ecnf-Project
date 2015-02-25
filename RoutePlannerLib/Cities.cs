@@ -29,7 +29,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Cities
             get { return cities.Count; }
         }
 
-        public City Iterator(int index)
+        public City Indexer(int index)
         {
             if (index < 0 || index >= cities.Count)
             {

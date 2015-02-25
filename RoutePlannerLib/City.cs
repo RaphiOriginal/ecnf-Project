@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.City
+namespace Ecnf.RoutePlanner.RoutePlannerLib.City
 {
     class City
     {
