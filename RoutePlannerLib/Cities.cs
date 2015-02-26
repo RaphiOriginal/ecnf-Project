@@ -11,17 +11,30 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
     {
         public List<City> cities = new List<City>();
 
+        public City this[int index]
+        {
+            get {
+                if (index < 0 || index >= cities.Count)
+                {
+                    return null;
+                }
+                return this.cities[index];  }
+            set { this.cities[index] = value; }
+        }
+
         public int ReadCities(string filename)
         {
             TextReader reader = new StreamReader(filename);
             string line = reader.ReadLine();
+            int counter = 0;
             while (line != null)
             {
+                counter++;
                 string[] cityArray = line.Split((char)9);
                 cities.Add(new City(cityArray[0], cityArray[1], int.Parse(cityArray[2]), Double.Parse(cityArray[3]), Double.Parse(cityArray[4])));
                 line = reader.ReadLine();
             }
-            return 0;
+            return counter;
         }
 
         public int Count
@@ -29,15 +42,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             get { return cities.Count; }
         }
 
-        public City Indexer(int index)
-        {
-            if (index < 0 || index >= cities.Count)
-            {
-                return null;
-            }
-            return cities[index];   
-        }
-        public List<City> FindNeigbours(WayPoint location, double distance)
+        public List<City> FindNeighbours(WayPoint location, double distance)
         {
             List<City> neigbours = new List<City>();
             foreach(City city in cities){

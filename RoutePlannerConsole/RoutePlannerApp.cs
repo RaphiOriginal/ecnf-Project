@@ -17,7 +17,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerConsole
             var wayPoint = new WayPoint("Windisch", 47.479319847061966, 8.212966918945312);
             Cities bananaRepublik = new Cities();
             bananaRepublik.ReadCities("citiesTestDataLab2.txt");
-            foreach (City city in bananaRepublik.FindNeigbours(wayPoint, 5000))
+            foreach (City city in bananaRepublik.FindNeighbours(wayPoint, 5000))
             {
                 Console.WriteLine(city.Name);
                 Console.WriteLine(city.Location.ToString());

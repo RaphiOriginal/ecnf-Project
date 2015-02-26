@@ -22,13 +22,13 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
       
         public override string ToString() {
              string text;
-             if (this.Name != null || this.Name != "")
+             if (this.Name != null)
              {
                  text = string.Format("WayPoint: {0} {1:N2}/{2:N2}", Name, Latitude, Longitude);
              }
              else
              {
-                text = string.Format("WayPoint: {0f2}/{1f2}", Latitude, Longitude);
+                text = string.Format("WayPoint: {0:N2}/{1:N2}", Latitude, Longitude);
              }
              return text;
         }
@@ -36,9 +36,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         public double Distance(WayPoint target)
         {
             double faktor = Math.PI / 180;
-            const double r = 6371;
-            return r * Math.Acos(Math.Sin(Latitude * faktor) * Math.Sin(target.Latitude * faktor) 
-                + Math.Cos(Latitude * faktor) * Math.Cos(target.Latitude * faktor) * Math.Cos(Latitude * faktor - target.Latitude * faktor));
+            const double r = 6371.0;
+            return r * Math.Acos(Math.Sin(Latitude * faktor) * Math.Sin(target.Latitude * faktor)
+                + Math.Cos(Latitude * faktor) * Math.Cos(target.Latitude * faktor) * Math.Cos(Longitude * faktor - target.Longitude * faktor));
         }
     }
 }
