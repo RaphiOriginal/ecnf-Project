@@ -22,7 +22,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
       
         public override string ToString() {
              string text;
-             if (this.Name != null)
+             if (!string.IsNullOrEmpty(Name))
              {
                  text = string.Format("WayPoint: {0} {1:N2}/{2:N2}", Name, Latitude, Longitude);
              }
