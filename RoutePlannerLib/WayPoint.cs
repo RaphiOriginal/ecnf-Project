@@ -24,7 +24,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
              string text;
              if (this.Name != null || this.Name != "")
              {
-                text = string.Format("WayPoint: {0} {1f2}/{2f2}", Name, Latitude, Longitude);
+                 text = string.Format("WayPoint: {0} {1:N2}/{2:N2}", Name, Latitude, Longitude);
              }
              else
              {
@@ -35,8 +35,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public double Distance(WayPoint target)
         {
-            const int r = 6371;
-            return r * Math.Acos(Math.Sin(Latitude) * Math.Sin(target.Latitude) + Math.Cos(Latitude) * Math.Cos(target.Latitude) * Math.Cos(Latitude - target.Latitude));
+            double faktor = Math.PI / 180;
+            const double r = 6371;
+            return r * Math.Acos(Math.Sin(Latitude * faktor) * Math.Sin(target.Latitude * faktor) 
+                + Math.Cos(Latitude * faktor) * Math.Cos(target.Latitude * faktor) * Math.Cos(Latitude * faktor - target.Latitude * faktor));
         }
     }
 }

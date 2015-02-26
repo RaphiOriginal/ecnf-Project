@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecnf.RoutePlanner.RoutePlannerLib.City
+namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
-    class City
+    public class City
     {
         public string Name
         {

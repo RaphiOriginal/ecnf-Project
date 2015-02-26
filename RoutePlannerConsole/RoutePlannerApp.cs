@@ -15,6 +15,13 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerConsole
         {
             Console.WriteLine("Welcome to RoutePlanner (Version {0})", Assembly.GetExecutingAssembly().GetName().Version);
             var wayPoint = new WayPoint("Windisch", 47.479319847061966, 8.212966918945312);
+            Cities bananaRepublik = new Cities();
+            bananaRepublik.ReadCities("citiesTestDataLab2.txt");
+            foreach (City city in bananaRepublik.FindNeigbours(wayPoint, 5000))
+            {
+                Console.WriteLine(city.Name);
+                Console.WriteLine(city.Location.ToString());
+            }
             Console.WriteLine("{0}: {1}/{2}", wayPoint.Name, wayPoint.Latitude, wayPoint.Longitude);
             Console.ReadKey();
         }
