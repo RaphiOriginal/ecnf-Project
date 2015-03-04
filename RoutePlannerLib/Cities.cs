@@ -45,12 +45,18 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public List<City> FindNeighbours(WayPoint location, double distance)
         {
+            SortedDictionary<double, City> list = new SortedDictionary<double, City>();
             List<City> neigbours = new List<City>();
             foreach(City city in cities){
-                if (location.Distance(city.Location) <= distance)
+                var result = location.Distance(city.Location);
+                if (result <= distance)
                 {
-                    neigbours.Add(city);
+                    list.Add(result, city);
                 }
+            }
+            foreach (KeyValuePair<double, City> city in list)
+            {
+                neigbours.Add(city.Value);
             }
             return neigbours;
         }
