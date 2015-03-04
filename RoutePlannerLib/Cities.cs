@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             {
                 counter++;
                 string[] cityArray = line.Split((char)9);
-                cities.Add(new City(cityArray[0], cityArray[1], int.Parse(cityArray[2]), Double.Parse(cityArray[3]), Double.Parse(cityArray[4])));
+                cities.Add(new City(cityArray[0], cityArray[1], int.Parse(cityArray[2]), Double.Parse(cityArray[3], CultureInfo.InvariantCulture), Double.Parse(cityArray[4], CultureInfo.InvariantCulture)));
                 line = reader.ReadLine();
             }
             return counter;
@@ -46,7 +47,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         {
             List<City> neigbours = new List<City>();
             foreach(City city in cities){
-                if (location.Distance(city.Location) <= distance && location.Distance(city.Location) != 0)
+                if (location.Distance(city.Location) <= distance)
                 {
                     neigbours.Add(city);
                 }
