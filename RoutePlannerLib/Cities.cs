@@ -60,5 +60,23 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             }
             return neigbours;
         }
+        public City FindCity(string cityName)
+        {
+            return FindCityName(delegate(City c)
+            {
+                return c.Name.ToLower() == cityName.Trim().ToLower();
+            });
+        }
+        public City FindCityName(Predicate<City> pred)
+        {
+            foreach (City city in cities)
+            {
+                if (pred(city))
+                {
+                    return city;
+                }
+            }
+            return null;
+        }
     }
 }
