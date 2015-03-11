@@ -19,7 +19,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
                 yield return line.Split(c);
 
             }
-            yield return null;
         }
     }
 }

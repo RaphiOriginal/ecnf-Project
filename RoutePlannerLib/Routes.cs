@@ -76,6 +76,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportModes mode)
         {
+            if (RouteRequestEvent != null)
+            {
+                RouteRequestEvent(this, new RouteRequestEventArgs(fromCity, toCity, mode));
+            }
             var citiesBetween = cities.FindCitiesBetween(cities.FindCity(fromCity), cities.FindCity(toCity));
             if (citiesBetween == null || citiesBetween.Count < 1 || routes == null || routes.Count < 1)
                 return null;
