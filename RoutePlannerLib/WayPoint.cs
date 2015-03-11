@@ -40,5 +40,15 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             return r * Math.Acos(Math.Sin(Latitude * faktor) * Math.Sin(target.Latitude * faktor)
                 + Math.Cos(Latitude * faktor) * Math.Cos(target.Latitude * faktor) * Math.Cos(Longitude * faktor - target.Longitude * faktor));
         }
+
+        public static WayPoint operator +(WayPoint links, WayPoint rechts)
+        {
+            return new WayPoint(links.Name, links.Latitude + rechts.Latitude, links.Longitude + rechts.Longitude);
+        }
+
+        public static WayPoint operator -(WayPoint links, WayPoint rechts)
+        {
+            return new WayPoint(links.Name, links.Latitude - rechts.Latitude, links.Longitude - rechts.Longitude);
+        }
     }
 }

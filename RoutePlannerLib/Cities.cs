@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fhnw.ecnf.RoutePlanner.RoutePlannerLib.Util;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -25,17 +28,20 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public int ReadCities(string filename)
         {
-            TextReader reader = new StreamReader(filename);
-            string line = reader.ReadLine();
-            int counter = 0;
-            while (line != null)
-            {
-                counter++;
-                string[] cityArray = line.Split((char)9);
-                cities.Add(new City(cityArray[0], cityArray[1], int.Parse(cityArray[2]), Double.Parse(cityArray[3], CultureInfo.InvariantCulture), Double.Parse(cityArray[4], CultureInfo.InvariantCulture)));
-                line = reader.ReadLine();
-            }
+           int counter = 0;
+           using (TextReader reader = new StreamReader(filename))
+           {
+               IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
+
+               foreach (string[] cs in citiesAsStrings)
+               {
+                   cities.Add(new City(cs[0].Trim(), cs[1].Trim(), int.Parse(cs[2], CultureInfo.InvariantCulture), 
+                       double.Parse(cs[3], CultureInfo.InvariantCulture), double.Parse(cs[4], CultureInfo.InvariantCulture)));
+                   counter ++;
+               }
+           }
             return counter;
+
         }
 
         public int Count

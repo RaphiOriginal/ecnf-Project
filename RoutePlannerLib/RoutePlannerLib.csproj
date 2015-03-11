@@ -45,6 +45,7 @@
     <Compile Include="RouteRequestEventArgs.cs" />
     <Compile Include="RouteRequestWatcher.cs" />
     <Compile Include="Routes.cs" />
+    <Compile Include="TextReaderExtension.cs" />
     <Compile Include="WayPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -38,5 +38,19 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             Population = _population;
             Location = new WayPoint(_name, _longitude, _latitude);
         }
+
+        public override bool Equals(object o)
+        {
+            if (o is City)
+            {
+                var r = (City) o;
+                if (this.Name == r.Name && this.Country == r.Country)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
     }
 }
