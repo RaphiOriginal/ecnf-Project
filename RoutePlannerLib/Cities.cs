@@ -70,7 +70,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         {
             return FindCityName(delegate(City c)
             {
-                return c.Name.ToLower() == cityName.Trim().ToLower();
+                return cityName.Equals(c.Name, StringComparison.InvariantCultureIgnoreCase);
             });
         }
         public City FindCityName(Predicate<City> pred)

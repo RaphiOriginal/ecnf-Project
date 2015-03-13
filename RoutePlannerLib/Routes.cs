@@ -219,9 +219,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         public List<Link> FindPath(List<City> banane, TransportModes modes)
         {
             List<Link> output = new List<Link>();
-            for(int i = 0; i < cities.Count - 1; i++)
+            for(int i = 0; i < (banane.Count - 1); i++)
             {
-                output.Add(FindLink(banane[i], banane [i+1], modes));
+                output.Add(FindLink(banane[i], banane[i+1], modes));
             }
             return output;
         } 

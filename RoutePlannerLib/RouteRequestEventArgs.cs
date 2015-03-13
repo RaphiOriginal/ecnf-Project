@@ -11,17 +11,17 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         public string FromCity
         {
             get;
-            set;
+            private set;
         }
         public string ToCity
         {
             get;
-            set;
+            private set;
         }
         public TransportModes Transport
         {
             get;
-            set;
+            private set;
         }
         public RouteRequestEventArgs(string _fromCity, string _toCity, TransportModes _transport)
         {

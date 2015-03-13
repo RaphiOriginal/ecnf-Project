@@ -13,7 +13,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         {
             if (!requestPerCity.ContainsKey(e.ToCity))
             {
-                requestPerCity.Add(e.ToCity, 1);
+                requestPerCity[e.ToCity] = 1;
             }
             else
             {
@@ -21,7 +21,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             }
             if (!requestPerCity.ContainsKey(e.FromCity))
             {
-                requestPerCity.Add(e.FromCity, 0);
+                requestPerCity[e.FromCity] =  0;
             }
             Console.WriteLine("Current Request State");
             Console.WriteLine("---------------------");
