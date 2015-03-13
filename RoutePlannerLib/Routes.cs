@@ -211,6 +211,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                 {
                     return l;
                 }
+                if (l.FromCity.Equals(toCity) && l.ToCity.Equals(fromCity) && l.TransportMode.Equals(modes))
+                {
+                    return l;
+                }
             }
             return null;
 

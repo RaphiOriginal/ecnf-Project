@@ -44,7 +44,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             if (o is City)
             {
                 var r = (City) o;
-                if (this.Name == r.Name && this.Country == r.Country)
+                if (this.Name.Equals(r.Name, StringComparison.InvariantCultureIgnoreCase) && this.Country.Equals(r.Country, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return true;
                 }
