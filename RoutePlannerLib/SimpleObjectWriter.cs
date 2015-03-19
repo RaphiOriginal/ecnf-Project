@@ -18,24 +18,23 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
         public void Next(Object next)
         {
             Type type = next.GetType();
-            FieldInfo[] fields = type.GetFields();
             PropertyInfo[] propertys = type.GetProperties();
             stream.Write("Instance of "+type.FullName+"\r\n");
-            foreach (FieldInfo f in fields)
+            foreach (PropertyInfo p in propertys.Where(e => e.CanRead))
             {
-                if (f.GetValue(next).GetType() == typeof(string))
+                if (p.GetValue(next).GetType() == typeof(string))
                 {
-                    stream.Write(f.Name + "=\"" + f.GetValue(next) + "\"\r\n");
+                    stream.Write(p.Name + "=\"" + p.GetValue(next) + "\"\r\n");
+                }
+                else if (p.GetType() == typeof(double) || p.GetType() == typeof(int) || p.GetType() == typeof(bool))
+                {
+                    stream.Write(p.Name + "=" + p.GetValue(next) + "\r\n");
                 }
                 else
                 {
-                    stream.Write(f.Name + "=" + f.GetValue(next) + "\r\n");
+                    stream.Write(p.Name + " is a nested object...\r\n");
+                    Next(p.GetValue(next));
                 }
-            }
-            foreach (PropertyInfo p in propertys)
-            {
-                stream.Write(p.Name + " is a nested object...\r\n");
-                Next(p);
             }
             stream.Write("End of instance\r\n");
         }
