@@ -18,14 +18,18 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         }
         static public IRoutes Create(Cities cities, string algorithmClassName)
         {
-            Assembly assembly = Assembly.LoadFrom(algorithmClassName);
-            /*Type types = assembly.GetType("IRoutes");
-            if(types == null || !types.IsClass){
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type aClass = assembly.GetType(algorithmClassName);
+            
+            if(aClass == null || !aClass.IsClass){
                 return null;
-            }*/
-            object routeClass = assembly.CreateInstance(algorithmClassName);
-            IRoutes route = routeClass as IRoutes;
-            return route;
+            }
+
+            Type[] citiesType = new Type[] { cities.GetType() };
+            ConstructorInfo constructor = aClass.GetConstructor(citiesType);
+            object[] parameter = new object[] { cities };
+            object route = constructor.Invoke(parameter);
+            return route as IRoutes;
         }
     }
 }
