@@ -11,8 +11,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         public string Name { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-        
 
+        public WayPoint() { }
         public WayPoint(string _name, double _latitude, double _longitude)
         {
             Name = _name;

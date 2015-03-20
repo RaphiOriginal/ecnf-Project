@@ -29,6 +29,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         {
             this.cities = cities;
         }
+        public Routes() { }
 
         /// <summary>
         /// Reads a list of links from the given file.

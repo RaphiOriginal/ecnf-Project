@@ -32,6 +32,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             set;
         }
 
+        public City() { }
+
         public City(string _name, string _country, int _population, double _longitude, double _latitude) {
             Name = _name;
             Country = _country;
