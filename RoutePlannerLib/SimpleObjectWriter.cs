@@ -26,9 +26,11 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
                 {
                     stream.Write(p.Name + "=\"" + p.GetValue(next) + "\"\r\n");
                 }
-                else if (p.GetType() == typeof(double) || p.GetType() == typeof(int) || p.GetType() == typeof(bool))
+                else if (p.GetValue(next).GetType() == typeof(double) || p.GetValue(next).GetType() == typeof(int) || p.GetValue(next).GetType() == typeof(bool))
                 {
-                    stream.Write(p.Name + "=" + p.GetValue(next) + "\r\n");
+                    string temp = "" + p.GetValue(next);
+                    temp = temp.Replace(',', '.');
+                    stream.Write(p.Name + "=" + temp + "\r\n");
                 }
                 else
                 {
