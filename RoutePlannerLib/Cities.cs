@@ -68,10 +68,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         }
         public City FindCity(string cityName)
         {
-            return FindCityName(delegate(City c)
-            {
-                return cityName.Equals(c.Name, StringComparison.InvariantCultureIgnoreCase);
-            });
+            return FindCityName(c => cityName.Equals(c.Name, StringComparison.InvariantCultureIgnoreCase));
+           
         }
         public City FindCityName(Predicate<City> pred)
         {
