@@ -167,9 +167,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         private List<City> FindNeighbours(City city, TransportModes mode)
         {
             var neighbors = new List<City>();
-            /*neighbors = routes.Where(r => r.TransportMode == mode)
-                .Select(r => r.FromCity).Concat(routes.Where(r => r.TransportMode == mode)
-                .Select(r => r.ToCity)).Where(c => c.Equals(city)).Distinct().ToList();*/
+            /*diese LINQ expression ist keine vereinfachung des untenstehenden Codes
+             * neighbors = routes.Where(r => r.TransportMode == mode && (r.FromCity.Equals(city) || r.ToCity.Equals(city)))
+                .Select(c => c.FromCity).Concat(routes.Where(r => r.TransportMode == mode && (r.FromCity.Equals(city) || r.ToCity.Equals(city)))
+                .Select(c => c.ToCity)).Where(c => !c.Equals(city)).Distinct().ToList();*/
             
             foreach (var r in routes)
                 if (mode.Equals(r.TransportMode))
@@ -200,11 +201,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public Link FindLink(City fromCity, City toCity, TransportModes modes)
         {
-            /*return routes.Single(l => l.FromCity.Equals(fromCity) && l.ToCity.Equals(toCity) && l.TransportMode.Equals(modes) ||
-                l.FromCity.Equals(toCity) && l.ToCity.Equals(fromCity) && l.TransportMode.Equals(modes));
-             * 
-             * */
-            foreach (Link l in routes)
+            return routes.Where(l => (l.FromCity.Equals(fromCity) && l.ToCity.Equals(toCity) && l.TransportMode == modes) ||
+                (l.FromCity.Equals(toCity) && l.ToCity.Equals(fromCity) && l.TransportMode == modes)).First();
+             
+            /*foreach (Link l in routes)
             {
                 if (l.FromCity.Equals(fromCity) && l.ToCity.Equals(toCity) && l.TransportMode.Equals(modes))
                 {
@@ -215,8 +215,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                     return l;
                 }
             }
-            return null;
-
+            return null;*/
         }
 
         public List<Link> FindPath(List<City> banane, TransportModes modes)
