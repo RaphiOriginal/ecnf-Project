@@ -80,7 +80,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                 if (foundTo && foundFrom)
                     return true;
             }
-
             return false;
         }
 

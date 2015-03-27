@@ -33,12 +33,13 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
            {
                IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
 
-               foreach (string[] cs in citiesAsStrings)
-               {
-                   cities.Add(new City(cs[0].Trim(), cs[1].Trim(), int.Parse(cs[2], CultureInfo.InvariantCulture), 
-                       double.Parse(cs[3], CultureInfo.InvariantCulture), double.Parse(cs[4], CultureInfo.InvariantCulture)));
-                   counter ++;
-               }
+               List<City> citiesTemp =
+                   citiesAsStrings.Select(
+                       cs => new City(cs[0].Trim(), cs[1].Trim(), int.Parse(cs[2], CultureInfo.InvariantCulture),
+                           double.Parse(cs[3], CultureInfo.InvariantCulture),
+                           double.Parse(cs[4], CultureInfo.InvariantCulture))).ToList();
+               cities = cities.Concat(citiesTemp).ToList();
+               counter = citiesTemp.Count;
            }
             return counter;
 
@@ -51,20 +52,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public List<City> FindNeighbours(WayPoint location, double distance)
         {
-            SortedDictionary<double, City> list = new SortedDictionary<double, City>();
-            List<City> neigbours = new List<City>();
-            foreach(City city in cities){
-                var result = location.Distance(city.Location);
-                if (result <= distance)
-                {
-                    list.Add(result, city);
-                }
-            }
-            foreach (KeyValuePair<double, City> city in list)
-            {
-                neigbours.Add(city.Value);
-            }
-            return neigbours;
+
+            return cities.Where(c => location.Distance(c.Location) <= distance)
+                .OrderBy(c => location.Distance(c.Location)).ToList();
         }
         public City FindCity(string cityName)
         {

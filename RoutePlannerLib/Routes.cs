@@ -57,20 +57,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                     }
                 }
             }
-
             return Count;
 
         }
-        /*
-        public List<Link> FindShortestRouteBetween(string fromCity, string toCity,
-                                        TransportModes mode)
-        {
-            if(RouteRequestEvent != null){
-                RouteRequestEvent(this, new RouteRequestEventArgs(fromCity, toCity, mode));
-            }
-            return new List<Link>();
-        }
-         * */
+       
         public delegate void RouteRequestHandler(object sender, RouteRequestEventArgs e);
         public event RouteRequestHandler RouteRequestEvent;
 
@@ -177,6 +167,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         private List<City> FindNeighbours(City city, TransportModes mode)
         {
             var neighbors = new List<City>();
+            /*neighbors = routes.Where(r => r.TransportMode == mode)
+                .Select(r => r.FromCity).Concat(routes.Where(r => r.TransportMode == mode)
+                .Select(r => r.ToCity)).Where(c => c.Equals(city)).Distinct().ToList();*/
+            
             foreach (var r in routes)
                 if (mode.Equals(r.TransportMode))
                 {
@@ -206,6 +200,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public Link FindLink(City fromCity, City toCity, TransportModes modes)
         {
+            /*return routes.Single(l => l.FromCity.Equals(fromCity) && l.ToCity.Equals(toCity) && l.TransportMode.Equals(modes) ||
+                l.FromCity.Equals(toCity) && l.ToCity.Equals(fromCity) && l.TransportMode.Equals(modes));
+             * 
+             * */
             foreach (Link l in routes)
             {
                 if (l.FromCity.Equals(fromCity) && l.ToCity.Equals(toCity) && l.TransportMode.Equals(modes))
@@ -229,6 +227,16 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                 output.Add(FindLink(banane[i], banane[i+1], modes));
             }
             return output;
-        } 
+        }
+
+        public City[] FindCities(TransportModes transportMode)
+        {
+            if (routes.Any(r => r.TransportMode == transportMode)) { 
+            return routes.Where(r => r.TransportMode == transportMode)
+                .Select(r => r.ToCity).Concat(routes.Select(r => r.FromCity))
+                .Distinct().ToArray();
+            }
+            return new City[]{};
+        }
     }
 }

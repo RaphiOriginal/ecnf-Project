@@ -31,9 +31,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
                 if (workStrings[0].Equals("Instance"))
                 {
                     Type aClass = assembly.GetType(workStrings[2]);
-                    /*ConstructorInfo oConstructor = aClass.GetConstructor(Type.EmptyTypes);
-                    object[] emptyParam = new object[] { null };
-                    temp = oConstructor.Invoke(emptyParam);*/
                     temp = assembly.CreateInstance(workStrings[2]);
                 }
                 else if (workStrings.Length == 1)
