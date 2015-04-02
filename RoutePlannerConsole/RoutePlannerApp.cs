@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Diagnostics;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 using System.Globalization;
+using System.IO;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerConsole
 {
@@ -25,6 +26,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerConsole
                 Console.WriteLine(city.Location.ToString());
             }
             Console.WriteLine("{0}: {1}/{2}", wayPoint.Name, wayPoint.Latitude, wayPoint.Longitude);
+            Console.WriteLine(Directory.GetCurrentDirectory());
             Console.ReadKey();
         }
     }
