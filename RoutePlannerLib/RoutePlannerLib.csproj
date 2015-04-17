@@ -55,7 +55,7 @@
     <Compile Include="Routes.cs" />
     <Compile Include="SimpleObjectReader.cs" />
     <Compile Include="SimpleObjectWriter.cs" />
-    <Compile Include="TextReaderExtension.cs" />
+    <Compile Include="Util\TextReaderExtension.cs" />
     <Compile Include="WayPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="World.cs" />

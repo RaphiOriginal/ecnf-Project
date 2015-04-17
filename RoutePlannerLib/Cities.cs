@@ -38,8 +38,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                        cs => new City(cs[0].Trim(), cs[1].Trim(), int.Parse(cs[2], CultureInfo.InvariantCulture),
                            double.Parse(cs[3], CultureInfo.InvariantCulture),
                            double.Parse(cs[4], CultureInfo.InvariantCulture))).ToList();
-               cities = cities.Concat(citiesTemp).ToList();
-               counter = citiesTemp.Count;
+               cities.AddRange(citiesTemp);
+               //Funktioniert scheinbar leider mit einem IEnumerable nicht =(
+               counter = citiesTemp.Count();
            }
             return counter;
 

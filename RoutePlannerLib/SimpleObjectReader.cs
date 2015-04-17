@@ -28,7 +28,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
             while ((currentLine = toRead.ReadLine()) != null)
             {
                 string[] workStrings = currentLine.Split(' ');
-                if (workStrings[0].Equals("Instance"))
+                if (workStrings[0] == "Instance")
                 {
                     Type aClass = assembly.GetType(workStrings[2]);
                     temp = assembly.CreateInstance(workStrings[2]);
