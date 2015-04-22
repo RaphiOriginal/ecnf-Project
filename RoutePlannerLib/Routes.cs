@@ -230,13 +230,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public City[] FindCities(TransportModes transportMode)
         {
-            //dann gibt es statt einem leeren Array etwas komisches zurück
-            if (routes.Any(r => r.TransportMode == transportMode)) { 
             return routes.Where(r => r.TransportMode == transportMode)
-                .Select(r => r.ToCity).Concat(routes.Select(r => r.FromCity))
+                .Select(r => r.ToCity).Concat(routes.Where(r => r.TransportMode == transportMode).Select(r => r.FromCity))
                 .Distinct().ToArray();
-            }
-            return new City[]{};
         }
     }
 }

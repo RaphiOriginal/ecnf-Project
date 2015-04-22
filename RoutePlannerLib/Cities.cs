@@ -28,22 +28,19 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public int ReadCities(string filename)
         {
-           int counter = 0;
+           int counter = cities.Count;
            using (TextReader reader = new StreamReader(filename))
            {
                IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
 
-               List<City> citiesTemp =
+               var citiesTemp =
                    citiesAsStrings.Select(
                        cs => new City(cs[0].Trim(), cs[1].Trim(), int.Parse(cs[2], CultureInfo.InvariantCulture),
                            double.Parse(cs[3], CultureInfo.InvariantCulture),
-                           double.Parse(cs[4], CultureInfo.InvariantCulture))).ToList();
+                           double.Parse(cs[4], CultureInfo.InvariantCulture)));
                cities.AddRange(citiesTemp);
-               //Funktioniert scheinbar leider mit einem IEnumerable nicht =(
-               counter = citiesTemp.Count();
+               return cities.Count-counter;
            }
-            return counter;
-
         }
 
         public int Count
