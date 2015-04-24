@@ -35,8 +35,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Export
                 {
                     if (from.Equals(l.FromCity))
                     {
-                        worksheet.Cells[row, 1] = l.FromCity.ToString();
-                        worksheet.Cells[row, 2] = l.ToCity.ToString();
+                        worksheet.Cells[row, 1] = l.FromCity.Location.Name;
+                        worksheet.Cells[row, 2] = l.ToCity.Location.Name;
                         worksheet.Cells[row, 3] = l.Distance.ToString();
                         worksheet.Cells[row, 4] = l.TransportMode.ToString();
                         row++;
