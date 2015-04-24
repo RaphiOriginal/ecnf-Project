@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
@@ -14,6 +15,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
     public class Cities
     {
         public List<City> cities = new List<City>();
+        TraceSource traceSource = new TraceSource("CitiesTrace");
 
         public City this[int index]
         {
@@ -28,19 +30,29 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public int ReadCities(string filename)
         {
+           //traceSource.TraceInformation("ReadCities started!");
            int counter = cities.Count;
-           using (TextReader reader = new StreamReader(filename))
-           {
-               IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
+            try
+            {
+                using (TextReader reader = new StreamReader(filename))
+                {
+                    IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
 
-               var citiesTemp =
-                   citiesAsStrings.Select(
-                       cs => new City(cs[0].Trim(), cs[1].Trim(), int.Parse(cs[2], CultureInfo.InvariantCulture),
-                           double.Parse(cs[3], CultureInfo.InvariantCulture),
-                           double.Parse(cs[4], CultureInfo.InvariantCulture)));
-               cities.AddRange(citiesTemp);
-               return cities.Count-counter;
-           }
+                    var citiesTemp =
+                        citiesAsStrings.Select(
+                            cs => new City(cs[0].Trim(), cs[1].Trim(), int.Parse(cs[2], CultureInfo.InvariantCulture),
+                                double.Parse(cs[3], CultureInfo.InvariantCulture),
+                                double.Parse(cs[4], CultureInfo.InvariantCulture)));
+                    cities.AddRange(citiesTemp);
+                    //traceSource.TraceInformation("ReadCities ended!");
+                    return cities.Count - counter;
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                //traceSource.TraceEvent(TraceEventType.Critical, 1, "404 File not Found!");
+                return 0;
+            }
         }
 
         public int Count

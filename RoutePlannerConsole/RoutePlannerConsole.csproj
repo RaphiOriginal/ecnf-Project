@@ -94,6 +94,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GarbageTest\GarbageTest.csproj">
+      <Project>{63ea6eb1-96cb-4973-bc17-686e21e2b071}</Project>
+      <Name>GarbageTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RoutePlannerLib\RoutePlannerLib.csproj">
       <Project>{0d9d6861-bec5-4b7b-8503-bfd138a4c814}</Project>
       <Name>RoutePlannerLib</Name>

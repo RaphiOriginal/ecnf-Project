@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 using System.Globalization;
 using System.IO;
+using Fhnw.Ecnf.RoutePlanner.GarbageTest;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerConsole
 {
@@ -15,6 +16,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerConsole
     {
         public static void Main(string[] args)
         {
+            GT gt = new GT();
             Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture);
             Console.WriteLine("Welcome to RoutePlanner (Version {0})", Assembly.GetExecutingAssembly().GetName().Version);
             var wayPoint = new WayPoint("Windisch", 47.479319847061966, 8.212966918945312);

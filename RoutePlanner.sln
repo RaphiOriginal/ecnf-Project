@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		RoutePlanner.testsettings = RoutePlanner.testsettings
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarbageTest", "GarbageTest\GarbageTest.csproj", "{63EA6EB1-96CB-4973-BC17-686E21E2B071}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{BFBD6863-49DE-406E-A91B-2E6777B2A4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFBD6863-49DE-406E-A91B-2E6777B2A4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFBD6863-49DE-406E-A91B-2E6777B2A4CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63EA6EB1-96CB-4973-BC17-686E21E2B071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63EA6EB1-96CB-4973-BC17-686E21E2B071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63EA6EB1-96CB-4973-BC17-686E21E2B071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63EA6EB1-96CB-4973-BC17-686E21E2B071}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

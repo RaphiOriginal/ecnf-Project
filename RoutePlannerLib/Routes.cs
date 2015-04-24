@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Linq;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
@@ -15,6 +16,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
     {
         List<Link> routes = new List<Link>();
         Cities cities;
+        TraceSource traceSource = new TraceSource("RoutesTrace");
 
         public int Count
         {
@@ -39,6 +41,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         /// <returns>number of read route</returns>
         public int ReadRoutes(string filename)
         {
+            //traceSource.TraceInformation("ReadRoutes started!");
             using (TextReader reader = new StreamReader(filename))
             {
                 string line;
@@ -57,6 +60,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                     }
                 }
             }
+            //traceSource.TraceInformation("ReadRoutes ended!");
             return Count;
 
         }
