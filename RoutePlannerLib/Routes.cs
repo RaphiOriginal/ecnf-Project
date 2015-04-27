@@ -41,7 +41,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         /// <returns>number of read route</returns>
         public int ReadRoutes(string filename)
         {
-            //traceSource.TraceInformation("ReadRoutes started!");
+            traceSource.TraceInformation("ReadRoutes started!");
             using (TextReader reader = new StreamReader(filename))
             {
                 string line;
@@ -60,7 +60,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                     }
                 }
             }
-            //traceSource.TraceInformation("ReadRoutes ended!");
+            traceSource.TraceInformation("ReadRoutes ended!");
             return Count;
 
         }

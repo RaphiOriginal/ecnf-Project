@@ -30,7 +30,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public int ReadCities(string filename)
         {
-           //traceSource.TraceInformation("ReadCities started!");
+           traceSource.TraceInformation("ReadCities started!");
            int counter = cities.Count;
             try
             {
@@ -44,13 +44,13 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                                 double.Parse(cs[3], CultureInfo.InvariantCulture),
                                 double.Parse(cs[4], CultureInfo.InvariantCulture)));
                     cities.AddRange(citiesTemp);
-                    //traceSource.TraceInformation("ReadCities ended!");
+                    traceSource.TraceInformation("ReadCities ended!");
                     return cities.Count - counter;
                 }
             }
             catch (FileNotFoundException e)
             {
-                //traceSource.TraceEvent(TraceEventType.Critical, 1, "404 File not Found!");
+                traceSource.TraceEvent(TraceEventType.Critical, 1, "404 File not Found!");
                 return 0;
             }
         }
