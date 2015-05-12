@@ -1,95 +1,21 @@
-
-using System;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 using System.Linq;
-using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
-    /// <summary>
-    /// Manages a routes from a city to another city.
-    /// </summary>
-    public abstract class Routes : IRoutes
+    public class RoutesDijkstra:Routes
     {
-        protected List<Link> routes = new List<Link>();
-        protected Cities cities;
-        protected TraceSource traceSource = new TraceSource("RoutesTrace");
-
-        public int Count
+        public RoutesDijkstra(Cities cities) : base(cities)
         {
-            get { return routes.Count; }
-        }
-        public bool ExecuteParallel { set; get; }
-
-        /// <summary>
-        /// Initializes the Routes with the cities.
-        /// </summary>
-        /// <param name="cities"></param>
-        public Routes(Cities cities)
-        {
-            this.cities = cities;
-        }
-        public Routes() { }
-
-        /// <summary>
-        /// Reads a list of links from the given file.
-        /// Reads only links where the cities exist.
-        /// </summary>
-        /// <param name="filename">name of links file</param>
-        /// <returns>number of read route</returns>
-        public int ReadRoutes(string filename)
-        {
-            traceSource.TraceInformation("ReadRoutes started!");
-            using (TextReader reader = new StreamReader(filename))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    var linkAsString = line.Split('\t');
-
-                    City city1 = cities.FindCity(linkAsString[0]);
-                    City city2 = cities.FindCity(linkAsString[1]);
-
-                    // only add links, where the cities are found 
-                    if ((city1 != null) && (city2 != null))
-                    {
-                        routes.Add(new Link(city1, city2, city1.Location.Distance(city2.Location),
-                                                   TransportModes.Rail));
-                    }
-                }
-            }
-            traceSource.TraceInformation("ReadRoutes ended!");
-            return Count;
-
-        }
-        public List<City> FindCitiesBetween(string from, string to)
-        {
-            return cities.FindCitiesBetween(cities.FindCity(from), cities.FindCity(to));
-        }
-        public abstract List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportModes mode);
-       
-        public delegate void RouteRequestHandler(object sender, RouteRequestEventArgs e);
-        public event RouteRequestHandler RouteRequestEvent;
-
-        public void NotifyObservers(string fromCity, string toCity, TransportModes mode)
-        {
-            if (RouteRequestEvent != null)
-            {
-                RouteRequestEvent(this, new RouteRequestEventArgs(fromCity, toCity, mode));
-            }
         }
 
-        /*
-        public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportModes mode)
+        public override List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportModes mode)
         {
-            if (RouteRequestEvent != null)
-            {
-                RouteRequestEvent(this, new RouteRequestEventArgs(fromCity, toCity, mode));
-            }
-            var citiesBetween = cities.FindCitiesBetween(cities.FindCity(fromCity), cities.FindCity(toCity));
+            NotifyObservers(fromCity, toCity, mode);
+            var citiesBetween = FindCitiesBetween(fromCity, toCity);
             if (citiesBetween == null || citiesBetween.Count < 1 || routes == null || routes.Count < 1)
                 return null;
 
@@ -185,7 +111,11 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         private List<City> FindNeighbours(City city, TransportModes mode)
         {
             var neighbors = new List<City>();
-            
+            /*diese LINQ expression ist keine vereinfachung des untenstehenden Codes
+             * neighbors = routes.Where(r => r.TransportMode == mode && (r.FromCity.Equals(city) || r.ToCity.Equals(city)))
+                .Select(c => c.FromCity).Concat(routes.Where(r => r.TransportMode == mode && (r.FromCity.Equals(city) || r.ToCity.Equals(city)))
+                .Select(c => c.ToCity)).Where(c => !c.Equals(city)).Distinct().ToList();*/
+
             foreach (var r in routes)
                 if (mode.Equals(r.TransportMode))
                 {
@@ -217,15 +147,27 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         {
             return routes.Where(l => (l.FromCity.Equals(fromCity) && l.ToCity.Equals(toCity) && l.TransportMode == modes) ||
                 (l.FromCity.Equals(toCity) && l.ToCity.Equals(fromCity) && l.TransportMode == modes)).First();
-            
+
+            /*foreach (Link l in routes)
+            {
+                if (l.FromCity.Equals(fromCity) && l.ToCity.Equals(toCity) && l.TransportMode.Equals(modes))
+                {
+                    return l;
+                }
+                if (l.FromCity.Equals(toCity) && l.ToCity.Equals(fromCity) && l.TransportMode.Equals(modes))
+                {
+                    return l;
+                }
+            }
+            return null;*/
         }
 
         public List<Link> FindPath(List<City> banane, TransportModes modes)
         {
             List<Link> output = new List<Link>();
-            for(int i = 0; i < (banane.Count - 1); i++)
+            for (int i = 0; i < (banane.Count - 1); i++)
             {
-                output.Add(FindLink(banane[i], banane[i+1], modes));
+                output.Add(FindLink(banane[i], banane[i + 1], modes));
             }
             return output;
         }
@@ -235,6 +177,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             return routes.Where(r => r.TransportMode == transportMode)
                 .Select(r => r.ToCity).Concat(routes.Where(r => r.TransportMode == transportMode).Select(r => r.FromCity))
                 .Distinct().ToArray();
-        }*/
+        }
     }
 }
