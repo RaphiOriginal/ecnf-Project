@@ -110,13 +110,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         private List<Link> FindAllLinksParallel(List<City> cities, TransportModes mode)
         {
-            var links= new List<Link>();
-            Parallel.ForEach(routes, r =>
-                {
-                    if (r.IsIncludedIn(cities))
-                        links.Add(r);
-                });
-            return links;
+            return routes.AsParallel().Where(r => r.IsIncludedIn(cities)).ToList();
         }
 
         private City FindCity(string cityName, List<City> cities)
@@ -156,26 +150,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 	                        P[i,j] = cities[k];
 	                    }
 	    }
-        private void SetupParallel(List<City> cities, List<Link> links)
-        {
-            D = InitializeWeight(cities, links);
-            P = new City[cities.Count, cities.Count];
-
-            Parallel.For(0, cities.Count, k => {
-                Parallel.For(0, cities.Count, i => {
-                    Parallel.For(0, cities.Count, j =>
-                    {
-                        if (D[i, k] != Double.MaxValue
-                         && D[k, j] != Double.MaxValue
-                         && D[i, k] + D[k, j] < D[i, j])
-                        {
-                            D[i, j] = D[i, k] + D[k, j];
-                            P[i, j] = cities[k];
-                        }
-                    });
-                });
-            });
-        }
 
         private double[,] InitializeWeight(List<City> cities, List<Link> links)
 		{
