@@ -12,6 +12,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Export
         public void WriteToFile(String fileName, City from, City to, List<Link> links)
         {
             var excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.DisplayAlerts = false;
             Workbook workbook = excel.Workbooks.Add();
             Worksheet worksheet = workbook.ActiveSheet;
 

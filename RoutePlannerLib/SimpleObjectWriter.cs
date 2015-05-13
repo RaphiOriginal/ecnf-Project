@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,11 +29,20 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
                     {
                         stream.Write(p.Name + "=\"" + p.GetValue(next) + "\"\r\n");
                     }
-                    else if (p.GetValue(next).GetType() == typeof(double) || p.GetValue(next).GetType() == typeof(int) || p.GetValue(next).GetType() == typeof(bool))
+                    else if (p.GetValue(next).GetType() == typeof(double))
                     {
-                        string temp = "" + p.GetValue(next);
+                        string temp = "" + ((double)p.GetValue(next)).ToString(CultureInfo.InvariantCulture);
                         temp = temp.Replace(',', '.');
                         stream.Write(p.Name + "=" + temp + "\r\n");
+                    } 
+                    else if(p.GetValue(next).GetType() == typeof(int))
+                    {
+                        string temp = "" + ((int)p.GetValue(next)).ToString(CultureInfo.InvariantCulture);
+                        stream.Write(p.Name + "=" + temp + "\r\n");
+                    }
+                    else if (p.GetValue(next).GetType() == typeof(bool))
+                    {
+                        stream.Write(p.Name + "=" + p.GetValue(next) + "\r\n");
                     }
                     else
                     {
