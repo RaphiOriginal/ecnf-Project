@@ -12,6 +12,42 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         {
         }
 
+
+        public async Task<List<Link>> FindShortestRouteBetweenAsync(string fromCity, string toCity, TransportModes mode, IProgress<string> progress)
+        {
+            NotifyObservers(fromCity, toCity, mode);
+            if (progress != null) progress.Report("notify Observer done");
+            var citiesBetween = FindCitiesBetween(fromCity, toCity);
+            if (progress != null) progress.Report("FindcitiesBetween done");
+            if (citiesBetween == null || citiesBetween.Count < 1 || routes == null || routes.Count < 1)
+                return null;
+
+            var source = citiesBetween[0];
+            var target = citiesBetween[citiesBetween.Count - 1];
+            if (progress != null) progress.Report("set source and target done");
+            Dictionary<City, double> dist;
+            Dictionary<City, City> previous;
+            var q = FillListOfNodes(citiesBetween, out dist, out previous);
+            if (progress != null) progress.Report("FillListOfNodes done");
+            dist[source] = 0.0;
+            if (progress != null) progress.Report("set Source distance done");
+
+            // the actual algorithm
+            previous = SearchShortestPath(mode, q, dist, previous);
+            if (progress != null) progress.Report("SearchShortestPath done");
+
+            // create a list with all cities on the route
+            var citiesOnRoute = GetCitiesOnRoute(source, target, previous);
+            if (progress != null) progress.Report("GetCitiesOnroute done");
+
+            // prepare final list of links
+            return FindPath(citiesOnRoute, mode);
+            
+        }
+        public Task<List<Link>> FindShortestRouteBetweenAsync(string fromCity, string toCity, TransportModes mode)
+        {
+            return FindShortestRouteBetweenAsync(fromCity, toCity, mode, null);
+        }
         public override List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportModes mode)
         {
             NotifyObservers(fromCity, toCity, mode);
