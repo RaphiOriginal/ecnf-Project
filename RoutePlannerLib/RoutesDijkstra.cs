@@ -13,7 +13,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         }
 
 
-        public async Task<List<Link>> FindShortestRouteBetweenAsync(string fromCity, string toCity, TransportModes mode, IProgress<string> progress)
+        public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportModes mode, IProgress<string> progress)
         {
             NotifyObservers(fromCity, toCity, mode);
             if (progress != null) progress.Report("notify Observer done");
@@ -44,34 +44,21 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             return FindPath(citiesOnRoute, mode);
             
         }
-        public Task<List<Link>> FindShortestRouteBetweenAsync(string fromCity, string toCity, TransportModes mode)
-        {
-            return FindShortestRouteBetweenAsync(fromCity, toCity, mode, null);
-        }
         public override List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportModes mode)
         {
-            NotifyObservers(fromCity, toCity, mode);
-            var citiesBetween = FindCitiesBetween(fromCity, toCity);
-            if (citiesBetween == null || citiesBetween.Count < 1 || routes == null || routes.Count < 1)
-                return null;
-
-            var source = citiesBetween[0];
-            var target = citiesBetween[citiesBetween.Count - 1];
-
-            Dictionary<City, double> dist;
-            Dictionary<City, City> previous;
-            var q = FillListOfNodes(citiesBetween, out dist, out previous);
-            dist[source] = 0.0;
-
-            // the actual algorithm
-            previous = SearchShortestPath(mode, q, dist, previous);
-
-            // create a list with all cities on the route
-            var citiesOnRoute = GetCitiesOnRoute(source, target, previous);
-
-            // prepare final list of links
-            return FindPath(citiesOnRoute, mode);
+            return FindShortestRouteBetween(fromCity, toCity, mode, null);
         }
+
+        public Task<List<Link>> FindShortestRouteBetweenAsync(string fromCity, string toCity, TransportModes mode, IProgress<string> progress)
+        {
+            return Task.Run(() => FindShortestRouteBetween(fromCity, toCity, mode, progress));
+        }
+
+        public Task<List<Link>> FindShortestRouteBetweenAsync(string fromCity, string toCity, TransportModes mode)
+        {
+            return Task.Run(() => FindShortestRouteBetween(fromCity, toCity, mode, null));
+        }
+
 
         private static List<City> FillListOfNodes(List<City> cities, out Dictionary<City, double> dist, out Dictionary<City, City> previous)
         {
