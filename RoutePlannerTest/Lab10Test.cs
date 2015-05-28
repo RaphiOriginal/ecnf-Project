@@ -37,7 +37,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             }
     
         }
-        
+
         [TestMethod]
         public void TestTask1FindRoutes()
         {
@@ -82,7 +82,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 
         [TestMethod]
         public void TestTask2FindRoutes()
-       {
+        {
             Cities cities = new Cities();
             cities.ReadCities(@"citiesTestDataLab10.txt");
             Assert.AreEqual(6372, cities.Count);
@@ -105,7 +105,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             Assert.AreEqual(13, links2.Count);
 
         }
-        
+
         [TestMethod]
         public void TestTask3CompareAlgorithms()
         {
@@ -126,9 +126,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             // the sequential version should be slower
             Assert.IsTrue(floydWarshallTime > dijkstraTime, "FloydWarshal should be slower");
 			*/
-        
         }
-        
+
         private long FindRoutes(Routes routes)
         {
             routes.ReadRoutes(@"linksTestDataLab10.txt");
@@ -140,6 +139,5 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             routes.FindShortestRouteBetween("Lyon", "Berlin", TransportModes.Rail);
             return timer.ElapsedTicks;
         }
-        
     }
 }
