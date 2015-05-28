@@ -60,6 +60,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RoutePlannerLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fhnw.RoutePlannerLib.1.0.0\lib\net45\RoutePlannerLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -98,10 +102,6 @@
     <ProjectReference Include="..\GarbageTest\GarbageTest.csproj">
       <Project>{63ea6eb1-96cb-4973-bc17-686e21e2b071}</Project>
       <Name>GarbageTest</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RoutePlannerLib\RoutePlannerLib.csproj">
-      <Project>{0d9d6861-bec5-4b7b-8503-bfd138a4c814}</Project>
-      <Name>RoutePlannerLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
